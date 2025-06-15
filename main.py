@@ -17,6 +17,10 @@ app.add_middleware(
 def read_root():
     return {"message": "Servidor funcionando correctamente"}
 
+@app.get("/ping")
+def ping():
+    return {"message": "pong"}
+
 @app.post("/analizar")
 async def analizar(request: Request):
     data = await request.json()
