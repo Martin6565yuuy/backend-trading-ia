@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Request
+from models.request_model import AnalysisRequest
+from service.analysis import analyze_market
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
@@ -21,11 +23,10 @@ def read_root():
 def ping():
     return {"message": "pong"}
 
-@app.post("/analizar")
-async def analizar(request: Request):
-    data = await request.json()
-    activo = data.get("activo")
-    temporalidad = data.get("temporalidad")
+@app.post("/analyze")
+def analyse(request: AnalysisRequest):
+    result = analyze_market(request.symbol, request.interval)
+    return result
 
     # 🔧 Aquí iría el análisis con IA más adelante
     return {
